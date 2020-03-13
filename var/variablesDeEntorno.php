@@ -8,4 +8,7 @@ public $user = "root";
 public $password = "admin";
 //Base de datos que voy a utilizar 
 public $baseDeDatos = "prueba";
+
+//Nombre del archivo excel 
+public $excelDatos = "Datos de Alumnos 3.xlsx";
 }

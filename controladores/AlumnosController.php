@@ -3,7 +3,7 @@ class AlumnosController
 {
     public function formularios()
     {
-        if(!isset($_FILES['archivo']) && !isset($_SESSION['archivo'])){
+        /*if(!isset($_FILES['archivo']) && !isset($_SESSION['archivo'])){
             $_SESSION['archivo']= "";
             echo '
             <div class="card">
@@ -27,7 +27,7 @@ class AlumnosController
         }
         
         if(!empty($_SESSION['archivo'])){
-            //echo $_SESSION['archivo'];
+            //echo $_SESSION['archivo'];*/
             echo '
             <div class="row">
                 <div class="col-lg-12">
@@ -39,7 +39,7 @@ class AlumnosController
                             <form method="POST" action="">
                                 <div class="form-group">
                                     <div class="form-label"></div>
-                                    <input type="text" name="alumnoBuscar" id="alumnoBuscar" placeholder="Introduzca el nombre del alumno" class="form-control"/>
+                                    <input type="text" name="alumnoBuscar" id="alumnoBuscar" required="true" placeholder="Introduzca el nombre del alumno" class="form-control"/>
                                 </div>
                                 <button type="submit" class="btn btn-success">Buscar</button>
                             </form>
@@ -64,12 +64,12 @@ class AlumnosController
                     </div>
             </div>
             ';
-        }
+        //}
     }
     public function procesarElExcelYTraerTodosLosRegistros(){
         $resultado = '';
-        if(isset($_POST['alumnoBuscar'])){
-            $archivo = $_SESSION['archivo'];
+        if(isset($_POST['alumnoBuscar']) && !empty($_POST['alumnoBuscar'])){
+            $archivo = (new Variables)->excelDatos;
             $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
             $reader->setReadDataOnly(true);
             $spreadsheet = $reader->load($archivo);
@@ -86,26 +86,15 @@ class AlumnosController
             );
             foreach($arrayFiltrado as $item){
                 $resultado .= '<tr>';
-                $resultado .= '<td>'.$item["A"].'</td>';
+                $resultado .= '<th>'.$item["A"].'</th>';
                 $resultado .= '<td>'.$item["B"].'</td>';
                 $resultado .= '</tr>';
             }
             return $resultado;
         }else{
-            $archivo = $_SESSION['archivo'];
-            $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
-            $reader->setReadDataOnly(true);
-            $spreadsheet = $reader->load($archivo);
-            $sheetData = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
-            unset($sheetData[1]);
-            foreach($sheetData as $item){
-                $resultado .= '<tr>';
-                $resultado .= '<td>'.$item["A"].'</td>';
-                $resultado .= '<td>'.$item["B"].'</td>';
-                $resultado .= '</tr>';
-            }
-            return $resultado;
+            return '';
             
         }
     }
 }
+
