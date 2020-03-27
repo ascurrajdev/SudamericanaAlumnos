@@ -10,5 +10,5 @@ public $password = "admin";
 public $baseDeDatos = "prueba";
 
 //Nombre del archivo excel 
-public $excelDatos = "Datos de Alumnos 3.xlsx";
+public $excelDatos = "Alumnos_Sudamericana.xlsx";
 }
